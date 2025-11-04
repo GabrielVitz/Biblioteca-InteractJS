@@ -1,0 +1,51 @@
+#frame {
+    display: flex;
+    gap: 10px;
+}
+#Left {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    border: 2px solid black;
+    width: 20vh;
+    height: 100vh;
+    gap: 30px;
+}
+#Right {
+    display: flex;
+    border: 2px dashed black;
+    width: 200vh;
+    height: 100vh;
+}
+
+.Predio {
+    background-color: rgb(6, 166, 206);
+    width: 100px;
+    height: 250px;
+    cursor: pointer;
+    user-select: none
+}
+.PredioNovo {
+    background-color: rgb(95, 137, 230);
+    width: 100px;
+    height: 250px;
+    cursor: pointer;
+    user-select: none;
+    
+}
+.Bloco {
+    background-color: rgb(6, 166, 206);
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    user-select: none
+}
+
+.BlocoNovo {
+    background-color:  rgb(95, 137, 230);
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    user-select: none
+}
