@@ -21,13 +21,15 @@
 
 .Predio {
     background-color: rgb(6, 166, 206);
+    border: 2px solid black;
     width: 100px;
     height: 250px;
     cursor: pointer;
     user-select: none
 }
-.PredioNovo {
+.PredioNovo {  
     background-color: rgb(95, 137, 230);
+    border: 2px solid black;
     width: 100px;
     height: 250px;
     cursor: pointer;
@@ -36,16 +38,25 @@
 }
 .Bloco {
     background-color: rgb(6, 166, 206);
+    border: 2px solid black;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.BlocoNovo {
+    background-color:  rgb(95, 137, 230);
+    border: 2px solid black;
     width: 150px;
     height: 150px;
     cursor: pointer;
     user-select: none
 }
-
-.BlocoNovo {
-    background-color:  rgb(95, 137, 230);
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
-    user-select: none
+.drop-ativado {
+    background-color: rgb(151, 210, 233);
+}
+/*Vou deixar essa funcionalidade apenas pro bloco*/
+.can-drop {
+    background-color: rgb(148, 255, 202);
 }
