@@ -1,4 +1,6 @@
-const cadastroForm = document.getElementById('form-cadastro');
+const formCadastroPredio = document.getElementById('form-cadastro-predio');
+const openModalPredio = document.getElementsByClassName('PredioNovo');
+
 let NumPredio = 0;
 let NumBloco = 0;
 let complete;
@@ -11,7 +13,6 @@ let AlturaPredio = 0;
 //     width: withd,
 //   },
 // ]
-
 
 // Opções da Paleta
 interact('#PredioMain')
@@ -323,7 +324,6 @@ edges: { top: true, left: true, bottom: true, right: true },
   console.log(event.type, event.target)
 })
 
-
 interact('.BlocoNovoInside')
 .draggable({
   modifiers: [
@@ -398,3 +398,14 @@ edges: {
   complete.style.width = '100%';
   complete.style.height = '100%';
 })
+
+
+openModalPredio.addEventListener('click', function(){
+
+  if (formCadastroPredio.style.display === 'none') {
+    formCadastroPredio.style.display = 'block';
+  }else {
+    formCadastroPredio.style.display = 'none';
+  }
+  
+});
