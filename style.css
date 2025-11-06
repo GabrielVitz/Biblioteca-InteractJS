@@ -1,7 +1,12 @@
+* {
+    font-size: 25px;
+}
+
 #frame {
     display: flex;
     gap: 10px;
 }
+/*Paleta*/
 #Left {
     display: flex;
     flex-direction: column;
@@ -12,13 +17,14 @@
     height: 100vh;
     gap: 30px;
 }
+/*Area de drop*/
 #Right {
     display: flex;
     border: 2px dashed black;
     width: 200vh;
     height: 100vh;
 }
-
+/*Predios e blocos criados*/
 .Predio {
     background-color: rgb(6, 166, 206);
     border: 2px solid black;
@@ -28,14 +34,17 @@
     user-select: none
 }
 .PredioNovo {  
+    display: flex;
+    flex-direction: column;
     background-color: rgb(95, 137, 230);
     border: 2px solid black;
     width: 100px;
     height: 250px;
     cursor: pointer;
-    user-select: none;
-    
+    user-select: none;   
+    gap: 10px;
 }
+
 .Bloco {
     background-color: rgb(6, 166, 206);
     border: 2px solid black;
@@ -45,18 +54,46 @@
     user-select: none;
 }
 
-.BlocoNovo {
+.BlocoNovo {    
     background-color:  rgb(95, 137, 230);
     border: 2px solid black;
     width: 150px;
     height: 150px;
     cursor: pointer;
-    user-select: none
+    user-select: none;
+    
 }
+.BlocoNovoInside {
+    background-color:  rgb(153, 178, 231);
+    border: 2px solid black;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    user-select: none;
+    flex: 1;
+}
+/*drops ativos*/
 .drop-ativado {
     background-color: rgb(151, 210, 233);
 }
 /*Vou deixar essa funcionalidade apenas pro bloco*/
 .can-drop {
     background-color: rgb(148, 255, 202);
+}
+/*Formulario*/
+#form-cadastro {
+    box-shadow: black;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height: 400px;
+    font-size: 20px;
+    border: solid 1px black;
+    text-align: center;
+    position: absolute;
+    float: left;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    padding: 0;
 }

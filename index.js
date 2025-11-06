@@ -1,5 +1,17 @@
+const cadastroForm = document.getElementById('form-cadastro');
 let NumPredio = 0;
 let NumBloco = 0;
+let complete;
+let AlturaPredio = 0;
+
+// let predio = [
+//   {
+//     id: NumPredio,
+//     name: string,
+//     width: withd,
+//   },
+// ]
+
 
 // Opções da Paleta
 interact('#PredioMain')
@@ -8,6 +20,7 @@ interact('#PredioMain')
       start (event) {
         
         let NewPredio = document.createElement('div');
+        let NewDiv = document.createElement('div');        
         let label = document.createElement('p');
         label.innerHTML = 'Predio ' + NumPredio;
         
@@ -69,7 +82,7 @@ interact('#BlocoMain')
   listeners: {
       start (event) {
         
-        let NewBloco = document.createElement('div');
+        let NewBloco = document.createElement('div');        
         let label = document.createElement('p');
         label.innerHTML = 'Bloco ' + NumBloco;
         
@@ -126,7 +139,7 @@ interact('#BlocoMain')
     inertia: true
 })
 
-// Area de Drop dos Predo
+// Area de Drop do predio
 interact('#Right')
 .dropzone({
     accept: '.Predio',
@@ -186,7 +199,7 @@ interact('#Right')
     }
 });
 
-// Objetos Criados
+// Predio & Blocos Criados
 
 interact('.PredioNovo')
 .draggable({
@@ -218,24 +231,27 @@ interact('.PredioNovo')
 }).resizable({
   modifiers: [
     interact.modifiers.restrictSize({
-      min: {width:150, height:150}
+      min: {width: 150, height:150}
     })
   ],
 edges: { top: true, left: true, bottom: true, right: true },
     
     listeners: {
-      move: function (event) {
+      move: function (event) {        
         var target = event.target;
-
+        
         var x = (parseFloat(target.getAttribute('data-x')) || 0);
         var y = (parseFloat(target.getAttribute('data-y')) || 0);
-
+        
         target.style.width = event.rect.width + 'px';
         target.style.height = event.rect.height + 'px';
-
+        
         x += event.deltaRect.left;
         y += event.deltaRect.top;
 
+        // AlturaPredio = target.style.height;
+        // console.log(AlturaPredio);
+        
         target.style.transform = `translate(${x}px, ${y}px)`;
 
         target.setAttribute('data-x', x);
@@ -257,7 +273,9 @@ edges: { top: true, left: true, bottom: true, right: true },
       
       var newElementBloco = event.interaction.clonedElement;
       var dropzonePredio = event.target; // a dropzone da .PredioNovo
-            
+
+      complete = newElementBloco;
+
       var blocoX = (parseFloat(newElementBloco.getAttribute('data-x')) || 0);
       var blocoY = (parseFloat(newElementBloco.getAttribute('data-y')) || 0);
 
@@ -271,14 +289,24 @@ edges: { top: true, left: true, bottom: true, right: true },
       if (!newElementBloco) return;
       NumBloco++; 
 
-      dropzonePredio.appendChild(newElementBloco);
+      dropzonePredio.appendChild(newElementBloco);      
+              
+      //newElementBloco.style.position = 'fixed';
+      newElementBloco.style.transform = 'none'; 
 
-      newElementBloco.style.position = 'fixed';
-      newElementBloco.style.transform = 'none';
+      // permite que voce posicione o bloco onde quiser
+
+      // newElementBloco.style.transform = `translate(${novoX}px, ${novoY}px)`;
+      // newElementBloco.setAttribute('data-x', novoX);
+      // newElementBloco.setAttribute('data-y', novoY);      
+
+      newElementBloco.setAttribute('data-x', 0);
+      newElementBloco.setAttribute('data-y', 0);
+
+      newElementBloco.style.position = 'relative';
       
-      newElementBloco.style.transform = `translate(${novoX}px, ${novoY}px)`;
-      newElementBloco.setAttribute('data-x', novoX);
-      newElementBloco.setAttribute('data-y', novoY);
+      newElementBloco.classList.add('BlocoNovoInside');
+      newElementBloco.classList.remove('BlocoNovo');
 
       event.interaction.dropped = true; 
       
@@ -291,45 +319,55 @@ edges: { top: true, left: true, bottom: true, right: true },
       event.target.classList.remove('drop-ativado');
   }
 
+}).on('hold', function (event) {
+  console.log(event.type, event.target)
 })
 
 
-interact('.BlocoNovo')
+interact('.BlocoNovoInside')
 .draggable({
   modifiers: [
     //o restrictRect considera a dimensão do elemento, enquanto apenas o restrict considera as coordenadas
     interact.modifiers.restrictRect({
       restriction: '.PredioNovo',
       endOnly: true
-    })
+    })    
   ],
   listeners: {
   
   move (event) {
         let target = event.target;
 
-        var x = (parseFloat(target.getAttribute('data-x')) || 0);
-        var y = (parseFloat(target.getAttribute('data-y')) || 0);
+        var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-        x += event.dx;
-        y += event.dy;
+        // x += event.dx;
+        // y += event.dy;
 
-        target.style.transform = `translate(${x}px, ${y}px)`;
+       target.style.transform = `translate(${x}px, ${y}px)`;
                       
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
     },
   },
   inertia: true
-}).resizable({
-  modifiers: [
+}).resizable({  
+  modifiers: [    
     interact.modifiers.restrictSize({
+      
       min: {width: 150, height:150},
       max: '.PredioNovo'
     })
 
   ],
-edges: { top: true, left: true, bottom: true, right: true },
+edges: {
+
+    top: true,
+    left: true,
+    bottom: true,
+    right: true
+    
+  },
     
     listeners: {
       move: function (event) {
@@ -341,6 +379,9 @@ edges: { top: true, left: true, bottom: true, right: true },
         target.style.width = event.rect.width + 'px';
         target.style.height = event.rect.height + 'px';
 
+        // LarguraBloco = target.style.width;
+        // AlturaBloco = target.style.height;
+
         x += event.deltaRect.left;
         y += event.deltaRect.top;
 
@@ -351,4 +392,9 @@ edges: { top: true, left: true, bottom: true, right: true },
       }
     },
       
+}).on('tap', function (event) {
+  complete.style.width = '0%';
+  complete.style.height = '0%';
+  complete.style.width = '100%';
+  complete.style.height = '100%';
 })
