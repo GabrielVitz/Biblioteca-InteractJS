@@ -1,18 +1,13 @@
 const formCadastroPredio = document.getElementById('form-cadastro-predio');
-const openModalPredio = document.getElementsByClassName('PredioNovo');
+const formCadastroBloco = document.getElementById('form-cadastro-bloco');
+
+
 
 let NumPredio = 0;
 let NumBloco = 0;
 let complete;
 let AlturaPredio = 0;
 
-// let predio = [
-//   {
-//     id: NumPredio,
-//     name: string,
-//     width: withd,
-//   },
-// ]
 
 // Opções da Paleta
 interact('#PredioMain')
@@ -21,7 +16,6 @@ interact('#PredioMain')
       start (event) {
         
         let NewPredio = document.createElement('div');
-        let NewDiv = document.createElement('div');        
         let label = document.createElement('p');
         label.innerHTML = 'Predio ' + NumPredio;
         
@@ -322,7 +316,21 @@ edges: { top: true, left: true, bottom: true, right: true },
 
 }).on('hold', function (event) {
   console.log(event.type, event.target)
+}).on('doubletap', function(event) {
+const verif = event.target.className; 
+
+const btnClosePredio = document.getElementById('closeModalPredio');
+if (verif === 'PredioNovo') {
+  formCadastroPredio.showModal();
+}
+
+btnClosePredio.addEventListener('click', () => {
+  formCadastroPredio.close();
 })
+
+
+})
+
 
 interact('.BlocoNovoInside')
 .draggable({
@@ -397,15 +405,14 @@ edges: {
   complete.style.height = '0%';
   complete.style.width = '100%';
   complete.style.height = '100%';
+}).on('doubletap', function(event) {
+const btnCloseBloco = document.getElementById('closeModalBloco');
+
+formCadastroBloco.showModal();
+
+btnCloseBloco.addEventListener('click', () => {
+  formCadastroBloco.close();
 })
 
 
-openModalPredio.addEventListener('click', function(){
-
-  if (formCadastroPredio.style.display === 'none') {
-    formCadastroPredio.style.display = 'block';
-  }else {
-    formCadastroPredio.style.display = 'none';
-  }
-  
-});
+})

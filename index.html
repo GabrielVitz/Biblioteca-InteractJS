@@ -31,16 +31,19 @@
 
 
         <div id="Right">
-           
+            
         </div>
 
-        <div id="form-cadastro-predio">
+        <dialog id="form-cadastro-predio" class="modal">
             
-            <div id="ModalZone">
+            <div class="ModalZone">
                 
-                <div id="MainContent">
-                    Cadastrar Predio
-                    <div id="Main-inputs">
+                <div class="MainContent">
+                    <div class="header-form">
+                        <button id="closeModalPredio">Fechar</button>                        
+                        <h3> Cadastrar Predio </h3>
+                    </div>
+                    <div class="Main-inputs">
 
                         <div class="Input">
                             Nome
@@ -52,7 +55,7 @@
                             <input type="number" class="inputTXT" name="qtdPisos" placeholder="Quantidade de pisos" >
                         </div>
                         
-                        <div id="buttons">
+                        <div class="buttons">
                             <button class="btn-cadastro">Cadastrar</button>
                         </div>
                     </div>
@@ -60,7 +63,39 @@
            
             </div>
         
-        </div>
+        </dialog>
+
+        <dialog id="form-cadastro-bloco" class="modal">
+            
+            <div class="ModalZone">
+                
+                <div class="MainContent">
+                    <div class="header-form">
+                        <button id="closeModalBloco">Fechar</button>                        
+                        <h3> Cadastrar Bloco </h3>
+                    </div>
+                    <div class="Main-inputs">
+
+                        <div class="Input">
+                            Nome
+                            <input type="text" class="inputTXT" name="nome" placeholder="Nome" >
+                        </div>
+                                
+                        <div class="Input">
+                            Selecione um piso
+                            <input type="number" class="inputTXT" name="qtdPisos" placeholder="Quantidade de pisos" >
+                        </div>
+                        
+                        <div class="buttons">
+                            <button class="btn-cadastro">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+        
+        </dialog>
+
     </div>
     <script src="index.js" ></script>
 </body>
