@@ -1,6 +1,12 @@
+import Predio from './predio.js';
+
+
+const btnCadastrarPredio = document.getElementById('Cadastrar-Predio');
+const btnClosePredio = document.getElementById('closeModalPredio');
 const formCadastroPredio = document.getElementById('form-cadastro-predio');
 const formCadastroBloco = document.getElementById('form-cadastro-bloco');
 
+const listaPredio = new Map();
 
 
 let NumPredio = 0;
@@ -17,11 +23,14 @@ interact('#PredioMain')
         
         let NewPredio = document.createElement('div');
         let label = document.createElement('p');
+        label.classList.add('label-nome-predio');
+
         label.innerHTML = 'Predio ' + NumPredio;
         
         NewPredio.classList.add('PredioNovo'); 
         NewPredio.appendChild(label);
-        
+        NewPredio.id = NumPredio;
+
         document.body.appendChild(NewPredio);
 
         NewPredio.style.position = 'fixed';
@@ -82,10 +91,10 @@ interact('#BlocoMain')
         label.innerHTML = 'Bloco ' + NumBloco;
         
         NewBloco.classList.add('BlocoNovo'); 
-        NewBloco.appendChild(label);
+        NewBloco.appendChild(label);        
         
         document.body.appendChild(NewBloco);
-
+        
         NewBloco.style.position = 'fixed';
         
         NewBloco.style.left = '0';
@@ -285,7 +294,7 @@ edges: { top: true, left: true, bottom: true, right: true },
       NumBloco++; 
 
       dropzonePredio.appendChild(newElementBloco);      
-              
+
       //newElementBloco.style.position = 'fixed';
       newElementBloco.style.transform = 'none'; 
 
@@ -317,19 +326,70 @@ edges: { top: true, left: true, bottom: true, right: true },
 }).on('hold', function (event) {
   console.log(event.type, event.target)
 }).on('doubletap', function(event) {
-const verif = event.target.className; 
 
-const btnClosePredio = document.getElementById('closeModalPredio');
+const verif = event.target.className; 
+const idDaDiv = event.target.id;
+
+formCadastroPredio.setAttribute('data-target-id', idDaDiv);
+
+const predioSalvo = listaPredio.get(idDaDiv);
+
+if(predioSalvo) {
+  // edita
+  document.getElementById('nomePredio').value = predioSalvo.nomePredio;
+  document.getElementById('qtdPisos').value = predioSalvo.qtdPisos;
+} else {
+  // cadastra
+  document.getElementById('nomePredio').value = '';
+  document.getElementById('qtdPisos').value = '';
+}
+console.log(idDaDiv);
+
 if (verif === 'PredioNovo') {
   formCadastroPredio.showModal();
 }
+
+})
+
 
 btnClosePredio.addEventListener('click', () => {
   formCadastroPredio.close();
 })
 
+btnCadastrarPredio.addEventListener('click', () => {
+
+    const nome = document.getElementById('nomePredio').value;
+    const pisos = document.getElementById('qtdPisos').value;
+
+    const salvarId = formCadastroPredio.getAttribute('data-target-id');
+
+    const predioExistente = listaPredio.get(salvarId);
+
+    if(predioExistente) {
+      predioExistente.atualizarDados(nome, pisos);      
+      console.log("predio atualizado", predioExistente);
+
+    }else {
+
+      const novoPredio = new Predio(salvarId ,nome, pisos);
+      listaPredio.set(salvarId, novoPredio);
+      console.log("predio cadastrado: ", novoPredio);
+      
+    }
+    const AlterarNome = document.getElementById(salvarId);
+    const alterarTitulo = document.getElementById('Title-predio');
+    
+    const labelPredio = AlterarNome.querySelector('.label-nome-predio');
+
+    if(labelPredio){
+      labelPredio.textContent = nome;
+      alterarTitulo.innerHTML = nome;
+    }
+    
+    formCadastroPredio.close();
 
 })
+
 
 
 interact('.BlocoNovoInside')
@@ -413,6 +473,4 @@ formCadastroBloco.showModal();
 btnCloseBloco.addEventListener('click', () => {
   formCadastroBloco.close();
 })
-
-
 })
